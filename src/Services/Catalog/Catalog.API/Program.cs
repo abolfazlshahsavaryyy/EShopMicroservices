@@ -1,6 +1,9 @@
 var builder = WebApplication.CreateBuilder(args);
+
+//add services
+
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+//add application configuration pipline
 
 app.Run();
