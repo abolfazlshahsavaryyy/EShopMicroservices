@@ -28,8 +28,9 @@ namespace Catalog.API.Products.CreateProduct
             //TODO
 
             //step3:return the CreateProductResult object
-            return new CreateProductResult(Guid.NewGuid());
-            throw new NotImplementedException();
+            var result =new CreateProductResult(Guid.NewGuid());
+            return result;
+            
         }
     }
 }
