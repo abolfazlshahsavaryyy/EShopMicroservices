@@ -1,5 +1,5 @@
 using Carter;
-
+using Marten;
 var builder = WebApplication.CreateBuilder(args);
 
 //add services
@@ -8,7 +8,10 @@ builder.Services.AddMediatR(confg =>
 {
     confg.RegisterServicesFromAssemblies(typeof(Program).Assembly);
 });
-
+builder.Services.AddMarten(option =>
+{
+    option.Connection(builder.Configuration.GetConnectionString("DefaultConnection")!);
+}).UseLightweightSessions();
 var app = builder.Build();
 
 
