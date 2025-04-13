@@ -2,7 +2,7 @@
 namespace Catalog.API.Products.GetProductById
 {
     //public record GetProductByIdRequest();
-    public record GetProductByIdResponse(Product Product);
+    public record GetProductByIdResponse( Product product);
     public class GetProductByIdEndpoint : ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
@@ -10,7 +10,7 @@ namespace Catalog.API.Products.GetProductById
             app.Map("/products/{id}", async (Guid id, ISender sender) =>
             {
                 var result = await sender.Send(new GetProductByIdQuery(id));
-                var response = result.Adapt<GetProductByIdResponse>();
+                var response = new GetProductByIdResponse(result.product);
                 return Results.Ok(response);
             })
              .WithName("GetProductById")

@@ -12,13 +12,13 @@ namespace Catalog.API.Products.GetProductById
         {
             logger.LogInformation($"endpoint get product by Id has been requested for Id:{query.Id}");
             var product = await session.LoadAsync<Product>(query.Id,cancellationToken);
-            if (product == null)
+            if (product is null)
             {
                 string content = $"product not found with Id :{query.Id}";
                 logger.LogWarning(content);
                 throw new NotFoundProductException(query.Id);
             }
-            return new GetProductByIdResult(product?? new Product());
+            return new GetProductByIdResult(product);
         }
     }
 }
