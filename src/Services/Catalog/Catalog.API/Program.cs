@@ -3,6 +3,7 @@ using Marten;
 var builder = WebApplication.CreateBuilder(args);
 
 //add services
+builder.Services.AddLogging();
 builder.Services.AddCarter();
 builder.Services.AddMediatR(confg =>
 {
