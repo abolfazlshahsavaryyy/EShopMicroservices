@@ -14,7 +14,7 @@
             {
                 Name = command.Name,
                 Category=command.Category,
-                Decription=command.Description,
+                Description=command.Description,
                 ImageFile=command.ImageFile,
                 Price=command.Price
             };
