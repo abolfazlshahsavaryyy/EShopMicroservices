@@ -1,13 +1,39 @@
-﻿namespace Catalog.API.Products.CreateProduct
+﻿using FluentValidation;
+
+namespace Catalog.API.Products.CreateProduct
 {
+    //Create Product Command and Result type
     public record CreateProductCommand(string Name,List<string> Category,string Description,string ImageFile,decimal Price)
         :ICommand<CreateProductResult>;
     public record CreateProductResult(Guid Id);
-    internal class CreateProductCommandHandler(IDocumentSession session)
+
+    //validation for command type
+
+    public class CreateProductCommandValidator: AbstractValidator<CreateProductCommand>
+    {
+        public CreateProductCommandValidator()
+        {
+            RuleFor(p => p.Name).NotEmpty().WithMessage("Name is requierd");
+            RuleFor(p => p.Category).NotEmpty().WithMessage("Category can't be empty");
+            RuleFor(p => p.ImageFile).NotEmpty().WithMessage("ImageFile is requierd");
+            RuleFor(p => p.Price).GreaterThan(0).WithMessage("Price can't be negetive");
+        }
+    }
+    internal class CreateProductCommandHandler
+        (IDocumentSession session,IValidator<CreateProductCommand> validator)
         : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
+
+            //Validation
+
+            var validationCheck = await validator.ValidateAsync(command, cancellationToken);
+            var error = validationCheck.Errors.Select(e => e.ErrorMessage).ToList();
+            if (error.Any())
+            {
+                throw new ValidationException(error.FirstOrDefault());
+            }
             //business logic to add product
             //step1:Create Product entity using command
             var product = new Product
