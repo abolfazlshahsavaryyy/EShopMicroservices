@@ -9,6 +9,7 @@ namespace BuildingBlocks.CQRS
     /// <typeparam name="TResponse"></typeparam>
     public interface ICommandHandler<in TCommand, TResponse> :
         IRequestHandler<TCommand,TResponse>
+        //command should return the repones type
         where TCommand:ICommand<TResponse>
         where TResponse : notnull
     {
