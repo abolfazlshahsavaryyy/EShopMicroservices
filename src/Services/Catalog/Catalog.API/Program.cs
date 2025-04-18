@@ -9,6 +9,8 @@ builder.Services.AddMediatR(confg =>
 {
     confg.RegisterServicesFromAssemblies(typeof(Program).Assembly);
 });
+
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 builder.Services.AddMarten(option =>
 {
     option.Connection(builder.Configuration.GetConnectionString("DefaultConnection")!);
