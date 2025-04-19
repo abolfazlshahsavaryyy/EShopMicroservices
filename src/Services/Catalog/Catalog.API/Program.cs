@@ -1,16 +1,19 @@
+using BuildingBlocks.Behaviors;
 using Carter;
 using Marten;
 var builder = WebApplication.CreateBuilder(args);
 
 //add services
+var assembly = typeof(Program).Assembly;
 builder.Services.AddLogging();
 builder.Services.AddCarter();
 builder.Services.AddMediatR(confg =>
 {
-    confg.RegisterServicesFromAssemblies(typeof(Program).Assembly);
+    confg.RegisterServicesFromAssemblies(assembly);
+    confg.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
 
-builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+builder.Services.AddValidatorsFromAssembly(assembly);
 builder.Services.AddMarten(option =>
 {
     option.Connection(builder.Configuration.GetConnectionString("DefaultConnection")!);

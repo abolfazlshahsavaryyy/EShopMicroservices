@@ -20,20 +20,13 @@ namespace Catalog.API.Products.CreateProduct
         }
     }
     internal class CreateProductCommandHandler
-        (IDocumentSession session,IValidator<CreateProductCommand> validator)
+        (IDocumentSession session,ILogger<CreateProductCommandHandler> logger)
         : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
-
-            //Validation
-
-            var validationCheck = await validator.ValidateAsync(command, cancellationToken);
-            var error = validationCheck.Errors.Select(e => e.ErrorMessage).ToList();
-            if (error.Any())
-            {
-                throw new ValidationException(error.FirstOrDefault());
-            }
+            logger.LogInformation($"Create product has been call for new product with name {command.Name}");
+            
             //business logic to add product
             //step1:Create Product entity using command
             var product = new Product
