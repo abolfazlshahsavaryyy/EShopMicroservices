@@ -10,6 +10,18 @@ namespace Catalog.API.Products.UpdateProduc
 
     public record UpdateProductResult(bool IsSuccess);
 
+    public class UpdateProductValidator : AbstractValidator<UpdateProductCommad>
+    {
+        public UpdateProductValidator()
+        {
+            RuleFor(c => c.Id).NotEmpty().WithMessage("Product Id requered");
+            RuleFor(c => c.Name).NotEmpty().WithMessage("Name is requerd")
+                .Length(2, 150).WithMessage("name must be between 2 to 150");
+
+            RuleFor(c => c.Price)
+                .GreaterThan(0).WithMessage("Price must be greater than 0");
+        }
+    }
     public class UpdateProductHandler
         (IDocumentSession session,ILogger<UpdateProductHandler> logger) 
         : ICommandHandler<UpdateProductCommad, UpdateProductResult>
