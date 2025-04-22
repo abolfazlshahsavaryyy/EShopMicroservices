@@ -8,6 +8,10 @@ namespace Catalog.API.Products.CreateProduct
     public record CreateProductResult(Guid Id);
 
     //validation for command type
+    //first: step to implement the validation 
+    //Create class name the class handler with prefix of Validation 
+    //it has to inharitance from the AbstracValidation from feluent validation 
+    //the generic type of the abstraValidation should be implement the ICommand interface from the MediatR
 
     public class CreateProductCommandValidator: AbstractValidator<CreateProductCommand>
     {
