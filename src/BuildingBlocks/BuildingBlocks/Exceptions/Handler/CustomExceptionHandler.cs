@@ -71,6 +71,6 @@ namespace BuildingBlocks.Exceptions.Handler
 
 
 
-        }
+         }
     }
 }

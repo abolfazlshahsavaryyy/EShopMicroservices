@@ -1,4 +1,5 @@
 using BuildingBlocks.Behaviors;
+using BuildingBlocks.Exceptions.Handler;
 using Carter;
 using Marten;
 using Microsoft.AspNetCore.Diagnostics;
@@ -14,7 +15,7 @@ builder.Services.AddMediatR(confg =>
     confg.RegisterServicesFromAssemblies(assembly);
     confg.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
-
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddValidatorsFromAssembly(assembly);
 builder.Services.AddMarten(option =>
 {
@@ -25,28 +26,28 @@ var app = builder.Build();
 
 //add application configuration pipline
 app.MapCarter();
-
-app.UseExceptionHandler(exceptionHandlerApp =>
-{
-    exceptionHandlerApp.Run(async context =>
-    {
-        var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
-        if(exception is null)
-        {
-            return;
-        }
-        var problemDetailes = new ProblemDetails
-        {
-            Title = exception.Message,
-            Status = StatusCodes.Status500InternalServerError,
-            //delete this when wan't to production
-            Detail = exception.StackTrace
-        };
-        var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
-        logger.LogError(exception, exception.Message);
-        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-        context.Response.ContentType = "application/problem+json";
-        await context.Response.WriteAsJsonAsync(problemDetailes);
-    });
-});
+app.UseExceptionHandler(option => { });
+//app.UseExceptionHandler(exceptionHandlerApp =>
+//{
+//    exceptionHandlerApp.Run(async context =>
+//    {
+//        var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
+//        if(exception is null)
+//        {
+//            return;
+//        }
+//        var problemDetailes = new ProblemDetails
+//        {
+//            Title = exception.Message,
+//            Status = StatusCodes.Status500InternalServerError,
+//            //delete this when wan't to production
+//            Detail = exception.StackTrace
+//        };
+//        var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+//        logger.LogError(exception, exception.Message);
+//        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+//        context.Response.ContentType = "application/problem+json";
+//        await context.Response.WriteAsJsonAsync(problemDetailes);
+//    });
+//});
 app.Run();
