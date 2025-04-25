@@ -1,6 +1,7 @@
 using BuildingBlocks.Behaviors;
 using BuildingBlocks.Exceptions.Handler;
 using Carter;
+using Catalog.API.Data;
 using Marten;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,12 @@ builder.Services.AddValidatorsFromAssembly(assembly);
 builder.Services.AddMarten(option =>
 {
     option.Connection(builder.Configuration.GetConnectionString("DefaultConnection")!);
-}).UseLightweightSessions();
+}).UseLightweightSessions()
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.InitializeMartenWith<CatalogInitialData>();
+}
 var app = builder.Build();
 
 
