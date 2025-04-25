@@ -24,12 +24,11 @@ namespace Catalog.API.Products.CreateProduct
         }
     }
     internal class CreateProductCommandHandler
-        (IDocumentSession session,ILogger<CreateProductCommandHandler> logger)
+        (IDocumentSession session)
         : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
-            logger.LogInformation($"Create product has been call for new product with name {command.Name}");
             
             //business logic to add product
             //step1:Create Product entity using command

@@ -10,7 +10,6 @@ namespace Catalog.API.Products.GetProductById
     {
         public async Task<GetProductByIdResult> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
         {
-            logger.LogInformation($"endpoint get product by Id has been requested for Id:{query.Id}");
             var product = await session.LoadAsync<Product>(query.Id,cancellationToken);
             if (product is null)
             {

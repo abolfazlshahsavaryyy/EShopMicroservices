@@ -17,7 +17,6 @@ namespace Catalog.API.Products.DeleteProduct
     {
         public async Task<DeleteProductResult> Handle(DeleteProductCommand command, CancellationToken cancellationToken)
         {
-            logger.LogInformation($"Command with Id of {command.Id} want be deleted");
             try
             {
                 session.Delete<Product>(command.Id);

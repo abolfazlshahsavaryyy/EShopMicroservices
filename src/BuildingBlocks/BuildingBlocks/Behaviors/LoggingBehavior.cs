@@ -8,6 +8,8 @@ namespace BuildingBlocks.Behaviors
     public class LoggingBehavior<TRequest, TResponse>
         (ILogger<LoggingBehavior<TRequest, TResponse>> logger)
         : IPipelineBehavior<TRequest, TResponse>
+        //the resone why I use IRequest is that the logging behaviors are for the command and query rquests so 
+        //I use IRequest<T> from the MediatR
         where TRequest :notnull,IRequest<TResponse>
         where TResponse:notnull
     {

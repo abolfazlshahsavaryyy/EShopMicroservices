@@ -23,12 +23,11 @@ namespace Catalog.API.Products.UpdateProduc
         }
     }
     public class UpdateProductHandler
-        (IDocumentSession session,ILogger<UpdateProductHandler> logger) 
+        (IDocumentSession session) 
         : ICommandHandler<UpdateProductCommad, UpdateProductResult>
     {
         public async Task<UpdateProductResult> Handle(UpdateProductCommad command, CancellationToken cancellationToken)
         {
-            logger.LogInformation($"update endpoint has been called for Id: {command.Id}");
             var product = await session.LoadAsync<Product>(command.Id, cancellationToken);
             if(product is null)
             {
