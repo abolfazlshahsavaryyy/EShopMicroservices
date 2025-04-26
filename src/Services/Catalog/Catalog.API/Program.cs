@@ -22,7 +22,7 @@ builder.Services.AddValidatorsFromAssembly(assembly);
 builder.Services.AddMarten(option =>
 {
     option.Connection(builder.Configuration.GetConnectionString("DefaultConnection")!);
-}).UseLightweightSessions()
+}).UseLightweightSessions();
 
 if (builder.Environment.IsDevelopment())
 {
