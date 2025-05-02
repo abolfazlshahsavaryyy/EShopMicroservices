@@ -1,4 +1,5 @@
-﻿using BuildingBlocks.CQRS;
+﻿using Basket.API.Data;
+using BuildingBlocks.CQRS;
 using FluentValidation;
 using System.Windows.Input;
 
@@ -14,15 +15,15 @@ namespace Basket.API.Basket.StoreBasket
             RuleFor(x => x.Cart.Username).NotEmpty().WithMessage("Username is Required");
         }
     }
-    public class StoreBasketHandler :
-        ICommandHandler<StoreBasketCommand, StoreBasketResult>
+    public class StoreBasketHandler
+        (IBasketRepository repo) 
+        :ICommandHandler<StoreBasketCommand, StoreBasketResult>
     {
         public async Task<StoreBasketResult> Handle(StoreBasketCommand request, CancellationToken cancellationToken)
         {
-            ShopingCart shoppingCart = request.Cart;
-            //TODO Store the new Shopping Cart to Db or Update it 
-            //TODO Update Cash
-            return new StoreBasketResult("swn");
+            ShopingCart cart = request.Cart;
+            var res = await repo.StoreBasket(cart, cancellationToken);
+            return new StoreBasketResult(res.Username ?? "");
 
         }
     }
