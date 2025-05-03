@@ -31,7 +31,7 @@ builder.Services.Decorate<IBasketRepository, CachBasketRepository>();
 builder.Services.AddStackExchangeRedisCache(option =>
 {
     option.Configuration = builder.Configuration.GetConnectionString("Redis");
-})
+});
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 var app = builder.Build();
 
