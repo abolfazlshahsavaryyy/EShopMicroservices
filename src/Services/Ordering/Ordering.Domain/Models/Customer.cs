@@ -16,6 +16,7 @@ namespace Ordering.Domain.Models
                 Id = Id,
                 Email = email
             };
+            return customer;
         }
 
     }
