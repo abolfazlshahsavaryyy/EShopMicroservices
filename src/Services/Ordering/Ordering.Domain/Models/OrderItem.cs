@@ -2,14 +2,15 @@
 
 namespace Ordering.Domain.Models
 {
-    public class OrderItem:Entity<Guid>
+    public class OrderItem:Entity<OrderItemId>
     {
-        public Guid OrderId { get;private set; }
-        public Guid ProductId { get; private set; }
+        public OrderId OrderId { get;private set; }
+        public ProductId ProductId { get; private set; }
         public int Quantity { get;private set; }
         public decimal Price { get;private set; }
-        internal OrderItem(Guid OrderId,Guid ProductId,int Quantity,decimal Price)
+        internal OrderItem(OrderId OrderId,ProductId ProductId,int Quantity,decimal Price)
         {
+            this.Id = OrderItemId.Of(Guid.NewGuid());
             this.OrderId = OrderId;
             this.ProductId = ProductId;
             this.Quantity = Quantity;
