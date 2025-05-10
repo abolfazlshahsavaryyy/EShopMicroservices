@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ordering.Domain.ValueObjects
 {
-    public class ProductId
+    public class ProductId:IComparable<ProductId>
     {
         public Guid Value { get; }
         private ProductId(Guid value)
@@ -22,5 +22,21 @@ namespace Ordering.Domain.ValueObjects
             }
             return new ProductId(value);
         }
+
+        public int CompareTo(ProductId? obj)
+        {
+            if (this.Value == obj.Value)
+            {
+                //1 mean true and they are equlse
+                return 1;
+            }
+            else
+            {
+                //0 mean they not equlse
+                return 0;
+            }
+        }
+
+        
     }
 }

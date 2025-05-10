@@ -16,7 +16,57 @@
             private set { }
 
         }
+        public static Order Create(OrderId orderId,CustomerId customerId,
+            OrderName orderName,Address shippingAddress,Address billingAddress,
+            Payment payment)
+        {
+            var order = new Order
+            {
+                Id = orderId,
+                CustomerId = customerId,
+                OrderName = orderName,
+                ShippingAddress = shippingAddress,
+                BillingAddress = billingAddress,
+                Payment = payment,
+                Status = OrderStatus.Pending
+            };
+            order.AddDomainEvent(new OrderCreatedEvent(order));
+            return order;
+
+        }
+        public void Update(OrderName orderName, Address shippingAddress,
+            Address billingAddress, Payment payment,OrderStatus status)
+        {
+            this.OrderName = orderName;
+            this.ShippingAddress = shippingAddress;
+            this.BillingAddress = billingAddress;
+            this.Payment = payment;
+            this.Status = status;
+
+            this.AddDomainEvent(new OrderUpdateEvent(this));
+            
+        }
+        public void AddOrderItem(ProductId productId,int quantity,
+        decimal price)
+        {
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(quantity);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
+
+            var orderItem = new OrderItem(this.Id, productId, quantity, price);
+            _orderItems.Add(orderItem);
+
+        }
         
+        public void Rmove(ProductId productId)
+        {
+            var orderItem = _orderItems.FirstOrDefault(o => o.ProductId== productId);
+            if(orderItem is not null)
+            {
+                _orderItems.Remove(orderItem);
+            }
+            
+
+        }
 
 
 
