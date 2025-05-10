@@ -12,6 +12,7 @@
         {
             ArgumentException.ThrowIfNullOrEmpty(value);
             ArgumentOutOfRangeException.ThrowIfNotEqual(value.Length, DefaultLenght);
+            return new OrderName(value);
         }
     }
 }
