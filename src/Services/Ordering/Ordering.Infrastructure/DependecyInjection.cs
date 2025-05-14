@@ -1,11 +1,5 @@
-﻿using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
 
 namespace Ordering.Infrastructure
 {
@@ -15,6 +9,11 @@ namespace Ordering.Infrastructure
             (this IServiceCollection service,IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("Database");
+
+            service.AddDbContext<ApplicationDbContext>(option =>
+            {
+                option.UseSqlServer(connectionString);
+            });
             return service;
         }
     }
