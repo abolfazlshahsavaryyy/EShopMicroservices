@@ -46,7 +46,7 @@
             this.AddDomainEvent(new OrderUpdateEvent(this));
             
         }
-        public void AddOrderItem(ProductId productId,int quantity,
+        public void Add(ProductId productId,int quantity,
         decimal price)
         {
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(quantity);
