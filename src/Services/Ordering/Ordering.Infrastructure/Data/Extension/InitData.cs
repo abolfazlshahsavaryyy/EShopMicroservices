@@ -35,9 +35,9 @@ namespace Ordering.Infrastructure.Data.Extension
 
                 var order1 = Order.Create
                     (
-                    OrderId.Of(new Guid()),
+                    OrderId.Of(Guid.NewGuid()),
                     CustomerId.Of(new Guid("9f1e3c8a-7b7e-4c79-9c9f-56e9c5c3f8b1")),
-                    OrderName.Of("order 1"),
+                    OrderName.Of("ord_1"),
                     address1,
                     address1,
                     pay1
@@ -49,9 +49,9 @@ namespace Ordering.Infrastructure.Data.Extension
                 order1.Add(ProductId.Of(new Guid("3c998547-cf15-4b5d-a635-291f3f7b5bc2")), 1,  799.99M);
                 var order2 = Order.Create
                     (
-                    OrderId.Of(new Guid()),
+                    OrderId.Of(Guid.NewGuid()),
                     CustomerId.Of(new Guid("4d6a1b9a-6d72-45d0-9d9e-3f4f6f0dcfab")),
-                    OrderName.Of("order 2"),
+                    OrderName.Of("ord_2"),
                     address2,
                     address2,
                     pay2
