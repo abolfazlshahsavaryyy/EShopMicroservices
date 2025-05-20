@@ -27,27 +27,27 @@ namespace Ordering.Infrastructure.Data.Extension
 
         private static async Task SeedOrderWithItem(ApplicationDbContext context)
         {
-            if (!await context.orders.AnyAsync())
+            if (!await context.Orders.AnyAsync())
             {
-                await context.orders.AddRangeAsync(InitData.OrderWithItem);
+                await context.Orders.AddRangeAsync(InitData.OrderWithItem);
                 await context.SaveChangesAsync();
             }
         }
 
         private static async Task SeedProduct(ApplicationDbContext context)
         {
-            if (!await context.products.AnyAsync())
+            if (!await context.Products.AnyAsync())
             {
-                await context.products.AddRangeAsync(InitData.Product);
+                await context.Products.AddRangeAsync(InitData.Product);
                 await context.SaveChangesAsync();
             }
         }
 
         private static async Task SeedCustomer(ApplicationDbContext context)
         {
-            if (! await context.customers.AnyAsync())
+            if (! await context.Customers.AnyAsync())
             {
-                await context.customers.AddRangeAsync(InitData.Customer);
+                await context.Customers.AddRangeAsync(InitData.Customer);
                 await context.SaveChangesAsync();
             }
         }
