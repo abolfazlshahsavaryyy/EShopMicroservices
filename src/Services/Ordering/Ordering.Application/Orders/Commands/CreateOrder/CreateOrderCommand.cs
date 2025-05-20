@@ -1,7 +1,4 @@
-﻿using BuildingBlocks.CQRS;
-using FluentValidation;
-using FluentValidation.Validators;
-using Ordering.Application.Dtos;
+﻿using FluentValidation;
 
 namespace Ordering.Application.Orders.Commands.CreateOrder;
 
