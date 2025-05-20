@@ -12,11 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Dtos\" />
-    <Folder Include="Orders\Commands\" />
     <Folder Include="Orders\EventHandler\" />
     <Folder Include="Orders\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
   </ItemGroup>
 
 </Project>
