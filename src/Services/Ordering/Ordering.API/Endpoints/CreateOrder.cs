@@ -8,7 +8,7 @@ public class CreateOrder : ICarterModule
     {
         app.MapPost("orders/", async (CreateOrderRequest request,ISender sender) =>
         {
-            var command = request.Adapt<CreateOrderCommand>();
+            var command = new CreateOrderCommand(request.order);
 
             var result = await sender.Send(command);
 
