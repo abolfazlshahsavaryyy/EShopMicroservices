@@ -25,6 +25,12 @@ namespace Ordering.Infrastructure.Data.Configuration
                 .WithOne()
                 .HasForeignKey(x => x.OrderId);
 
+
+            builder.HasMany(o => o.OrderItem)           
+                .WithOne(oi => oi.Order)            
+                .HasForeignKey(oi => oi.OrderId);     
+
+
             //first we defind the complex property in db
             builder.ComplexProperty
                 (

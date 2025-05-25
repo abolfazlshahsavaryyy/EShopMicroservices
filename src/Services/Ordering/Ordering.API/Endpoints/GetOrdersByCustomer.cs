@@ -4,7 +4,7 @@ using Ordering.Domain.ValueObjects;
 
 namespace Ordering.API.Endpoints;
 
-public record GetOrderByCustomerReponse(IEnumerable<Order> orders);
+public record GetOrderByCustomerReponse(IEnumerable<OrderDto> orders);
 public class GetOrdersByCustomer : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
@@ -12,7 +12,7 @@ public class GetOrdersByCustomer : ICarterModule
         app.MapGet("orders/customer/{customerId}", async (Guid customerId, ISender sender) =>
         {
             var result = await sender.Send(new GetOrderByCustomerQuery(customerId));
-            var response = result.Adapt<GetOrderByCustomerReponse>();
+            var response = new GetOrderByCustomerReponse(result.orders);
             return Results.Ok(response);
         }).WithName("Get Order By Customer")
         .Produces<CreateOrderResponse>(StatusCodes.Status201Created)

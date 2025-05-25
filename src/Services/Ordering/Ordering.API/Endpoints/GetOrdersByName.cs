@@ -12,7 +12,7 @@ public class GetOrdersByName : ICarterModule
         {
             var query = new GetOrdersByNameQuery(name);
             var result = await sender.Send(query);
-            var response = result.Adapt<GetOrderByNameReponse>();
+            var response = new GetOrderByNameResult(result.orders);
             return Results.Ok(response);
 
         })

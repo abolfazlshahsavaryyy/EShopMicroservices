@@ -10,11 +10,23 @@ public class GetOrdersByNameHandler
         //get order by name
         //return it
         var orders = await dbContext.Orders
-            .Include(o => o.OrderItem)
+            //.Include(o => o.OrderItem)
             .AsNoTracking()
             .Where(o => o.OrderName.Value.Contains(query.name))
-            .OrderBy(o => o.OrderName)
+            .OrderBy(o => o.OrderName.Value)
             .ToListAsync(cancellationToken);
+
+        var orderitems = await dbContext.OrderItems.ToListAsync();
+        foreach(var order in orders)
+        {
+            foreach(var oi in orderitems)
+            {
+                if (oi.OrderId.Value == order.Id.Value)
+                {
+                    order.Add(oi.ProductId, oi.Quantity, oi.Price);
+                }
+            }
+        }
 
         //form 1
         var dtoOrders = orders.ProjectToOrderDto();

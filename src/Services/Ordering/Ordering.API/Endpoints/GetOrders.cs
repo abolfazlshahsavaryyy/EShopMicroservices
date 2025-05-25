@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.Paggination;
+using Ordering.Application.Orders.Queries.GetOrders;
 
 namespace Ordering.API.Endpoints;
 
@@ -7,9 +8,9 @@ public class GetOrders : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("orders/", async ([AsParameters]PaginationRequest request,ISender sender) =>
+        app.MapGet("/orders", async ([AsParameters]PaginationRequest request,ISender sender) =>
         {
-            var result = await sender.Send(request);
+            var result = await sender.Send(new GetOrderQuery(request));
             var response = request.Adapt<GetOrderResponse>();
             return Results.Ok(response);
         }).WithName("Get Order")

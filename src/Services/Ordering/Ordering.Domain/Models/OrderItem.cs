@@ -5,6 +5,7 @@ namespace Ordering.Domain.Models
     public class OrderItem:Entity<OrderItemId>
     {
         public OrderId OrderId { get;private set; }
+        public Order Order { get; private set; } = default!;
         //each OrderItem has the qunique productId
         public ProductId ProductId { get; private set; }
         public int Quantity { get;private set; }
