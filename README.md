@@ -1,5 +1,27 @@
 # EShopMicroservices
 This project is a microservices-based e-commerce system built with ASP.NET Core using Clean Architecture, DDD, CQRS, and Vertical Slice Architecture. It consists of four services: Catalog (PostgreSQL + Marten), Basket (PostgreSQL + Redis + gRPC), Discount (gRPC + SQLite), and Ordering (EF Core + SQL Server). The solution leverages MediatR with validation and logging behaviors, Carter for minimal APIs, and centralized exception handling. It also includes health checks, automated migrations, and domain events, delivering a scalable, cloud-ready backend architecture.
+
+## 📚 Table of Contents
+
+- [📦 Project Overview](#-project-overview)  
+- [🚀 Tech Stack](#-tech-stack)  
+- [🧱 Architecture](#-architecture)  
+  - [Microservices Overview](#microservices-overview)  
+  - [Architecture Patterns](#architecture-patterns)  
+- [🔧 Services](#-services)  
+  - [Catalog Service](#catalog-service)  
+  - [Basket Service](#basket-service)  
+  - [Discount Service](#discount-service)  
+  - [Ordering Service](#ordering-service)  
+- [📡 Communication](#-communication)  
+  - [gRPC Integration](#grpc-integration)  
+  - [REST Endpoints](#rest-endpoints)  
+- [🗄️ Data Storage](#️-data-storage)  
+- [⚙️ Cross-Cutting Concerns](#️-cross-cutting-concerns)  
+  - [Validation & Logging](#validation--logging)  
+  - [Exception Handling](#exception-handling)  
+  - [Health Checks](#health-checks)  
+
 # services
 ## Catalog Service
 
