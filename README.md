@@ -1,6 +1,5 @@
 # EShopMicroservices
-description 
-
+This project is a microservices-based e-commerce system built with ASP.NET Core using Clean Architecture, DDD, CQRS, and Vertical Slice Architecture. It consists of four services: Catalog (PostgreSQL + Marten), Basket (PostgreSQL + Redis + gRPC), Discount (gRPC + SQLite), and Ordering (EF Core + SQL Server). The solution leverages MediatR with validation and logging behaviors, Carter for minimal APIs, and centralized exception handling. It also includes health checks, automated migrations, and domain events, delivering a scalable, cloud-ready backend architecture.
 # services
 ## Catalog Service
 
@@ -71,10 +70,87 @@ ValidationBehavior – Ensures all incoming commands and queries are validated.
 
 LoggingBehavior – Logs requests for better traceability and debugging.
 
+## Discount Service
+
+The Discount Service is a lightweight and high-performance microservice built with gRPC to provide discount calculation and retrieval capabilities to other services (such as the Basket Service). It centralizes all discount-related logic, ensuring consistent pricing rules across the system.
+
+### Key Features & Architecture
+
+### gRPC Communication:
+
+Implements a gRPC-based API for fast, type-safe, and high-performance communication between services.
+
+Ensures efficient integration with services like Basket, which query discount information during checkout.
+
+### SQLite Database:
+
+Uses Entity Framework Core with SQLite as the database engine.
+
+Ideal for lightweight data storage and rapid access to discount records.
+
+### Automated Database Migrations:
+
+Integrates automatic database migration via app.UseMigration() during startup, ensuring schema consistency without manual steps.
+
+### Simple and Focused Design:
+
+Designed as a focused, single-responsibility service, handling only discount-related data and logic.
+
+Follows a clear separation of concerns with dedicated data and service layers.
 
 
+## Ordering Service
+
+The Ordering Service is the most complex and feature-rich microservice in the system. It is responsible for managing the full order lifecycle — from creation and processing to persistence — and is designed with enterprise-grade architectural patterns for scalability, maintainability, and domain fidelity.
+
+## Clean Architecture & Domain-Driven Design (DDD)
+
+### Clean Architecture Principles:
+
+Strict separation of concerns across Application, Infrastructure, and API layers.
+
+Promotes maintainability, testability, and clear dependency boundaries.
+
+### Domain-Driven Design (DDD):
+
+Focuses on the core domain logic, encapsulating business rules within the Domain Layer.
+
+Uses rich domain models and aggregates to ensure consistency and integrity of order-related operations.
 
 
+### Key Features & Architecture
+
+### Application Layer:
+
+Contains business use cases and orchestrates domain logic.
+
+Uses MediatR for implementing CQRS-style request/response handling.
+
+Incorporates cross-cutting concerns like:
+
+ValidationBehavior – Ensures all requests are validated before execution.
+
+LoggingBehavior – Provides detailed logging for traceability.
+
+### Infrastructure Layer:
+
+Manages data access using Entity Framework Core with SQL Server as the primary database.
+
+Adds SaveChanges Interceptors such as:
+
+AuditableEntityInterceptor – Automatically populates audit fields like created/updated timestamps.
+
+DispatchDomainEventInterceptor – Publishes domain events after transactions are committed, enabling event-driven workflows.
+
+### API Layer:
+
+Exposes RESTful endpoints for order operations.
+
+Configured with middleware for dependency injection, exception handling, and routing.
+
+### Database Initialization:
+
+Includes an automatic database initialization process (app.InitialiesDatabaseAsync()) in development environments for easier setup and testing.
 
 
 
